@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI-workshop Stabssamling</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f5f7fa;
+}
+
+h1 {
+    color: #003366;
+}
+
+#search {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.person {
+    background: white;
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.group {
+    font-weight: bold;
+    color: #0066cc;
+}
+</style>
+</head>
+<body>
+
+<h1>KI-workshop Stabssamling</h1>
+
+<p>
+Skriv inn navn for å finne gruppen din.
+</p>
+
+<input
+    type="text"
+    id="search"
+    placeholder="Søk etter fornavn eller etternavn..."
+    onkeyup="searchNames()"
+/>
+
+<div id="results"></div>
+
+<script>
+
+const participants = [
+
+    {name: "Børge Toft", group: 9},
+    {name: "Hilde Berntsen", group: 9},
+    {name: "Karl Axel Moen", group: 9},
+    {name: "Mette Olsen", group: 9},
+    {name: "Sigbjørn Strand", group: 9},
+    {name: "Sjur Brandt", group: 9}
+
+];
+
+// sortering på fornavn
+participants.sort((a,b) => {
+    const firstA = a.name.split(" ")[0];
+    const firstB = b.name.split(" ")[0];
+    return firstA.localeCompare(firstB, "no");
+});
+
+function displayPeople(list) {
+
+    const results = document.getElementById("results");
+
+    results.innerHTML = "";
+
+    list.forEach(person => {
+
+        results.innerHTML += `
+            <div class="person">
+                <strong>${person.name}</strong><br>
+                <span class="group">Gruppe ${person.group}</span>
+            </div>
+        `;
+    });
+}
+
+function searchNames() {
+
+    const search = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const filtered = participants.filter(person =>
+        person.name.toLowerCase().includes(search)
+    );
+
+    displayPeople(filtered);
+}
+
+displayPeople(participants);
+
+</script>
+
+</body>
+</html>
